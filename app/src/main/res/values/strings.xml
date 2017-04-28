@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Riesgo Psicosocial</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">La contraseña es muy corta</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="action_sign_in">Ingresar</string>
+    <string name="prompt_email">Nombre de Usuario</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in_short">Ingresar</string>
+    <string name="promt_code">Código de Empresa</string>
 </resources>
