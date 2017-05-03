@@ -8,6 +8,16 @@ public class User {
     private String id;
     private String username;
 
+    private String company_id;
+
+    public String getCompanyId() {
+        return company_id;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.company_id = companyId;
+    }
+
     public String getId() {
         return id;
     }

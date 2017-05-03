@@ -6,4 +6,5 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="corporate_color">#209605</color>
+    <color name="form_secondary_text_color">#808284</color>
 </resources>

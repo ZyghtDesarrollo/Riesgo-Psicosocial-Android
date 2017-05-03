@@ -8,4 +8,7 @@
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in_short">Ingresar</string>
     <string name="promt_code">Código de Empresa</string>
+    <string name="next">Siguiente</string>
+    <string name="ok">Si</string>
+    <string name="cancel">No</string>
 </resources>

@@ -28,5 +28,21 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <style name="form_secondary_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/form_horizontal_margin</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">@color/form_secondary_text_color</item>
+    </style>
+
+
+    <style name="form_spinner_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:spinnerMode">dialog</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@android:color/secondary_text_light_nodisable</item>
+    </style>
 
 </resources>

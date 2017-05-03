@@ -48,13 +48,21 @@ public class LoginAPIHandler extends APIResourceHandler {
     @Override
     public void handlerAPIResponse(APIResponse apiResponse) {
 
+        //TODO:
+        InitialAPIHandler initialAPIHandler = new InitialAPIHandler();
+        initialAPIHandler.setRequestHandle(getResponseActionDelegate(), getContext());
+
+        /*
         if (apiResponse.getStatus().isSuccess()) {
             extractToken(apiResponse.getRawResponse());
+
+
+
 
         } else {
             getResponseActionDelegate().didNotSuccessfully(apiResponse.getStatus().getErrorCode());
         }
-
+*/
     }
 
 
