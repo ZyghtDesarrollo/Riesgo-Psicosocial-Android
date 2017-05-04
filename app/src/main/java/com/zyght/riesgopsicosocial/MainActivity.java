@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             i++;
         }
 
-        listItems[listItems.length-1] = "Planes de Acción";
+        listItems[listItems.length-1] = "Recomendaciones";
 
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
@@ -58,10 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void showNext(int position){
 
-        if(position <= questionnaires.size()){
+        if(position < questionnaires.size()){
             Questionnaire questionnaire = questionnaires.get(position);
-            Intent intent = new Intent(this, SurveyActivity.class);
+            Intent intent = new Intent(this, PositionActivity.class);
             intent.putExtra("QUESTIONNAIRE", questionnaire);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(this, RecommendationsActivity.class);
             startActivity(intent);
         }
 

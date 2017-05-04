@@ -49,11 +49,10 @@ public class InitialAPIHandler extends APIResourceHandler {
                 questionBLL.add(q);
             }
 
-        } else {
-
         }
 
-        getResponseActionDelegate().didSuccessfully("");
+        GetPositionsAPIHandler initialAPIHandler = new GetPositionsAPIHandler();
+        initialAPIHandler.setRequestHandle(getResponseActionDelegate(), getContext());
 
     }
 
@@ -62,9 +61,9 @@ public class InitialAPIHandler extends APIResourceHandler {
 
     @Override
     public String getServiceURL() {
-        //return ResourcesConstants.BASE_URL + "/token";
+        return ResourcesConstants.BASE_URL + "/rquestionary/initialdata";
 
-        return "http://riesgopsicosocial.azurewebsites.net/index.php/api/rquestionary/initialdata";
+
     }
 
     @Override

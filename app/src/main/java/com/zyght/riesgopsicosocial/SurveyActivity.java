@@ -16,12 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.zyght.riesgopsicosocial.entity.Answer;
 import com.zyght.riesgopsicosocial.entity.Category;
+import com.zyght.riesgopsicosocial.entity.Option;
 import com.zyght.riesgopsicosocial.entity.Question;
 import com.zyght.riesgopsicosocial.entity.QuestionBLL;
-import com.zyght.riesgopsicosocial.entity.Option;
-import com.zyght.riesgopsicosocial.entity.Answer;
 import com.zyght.riesgopsicosocial.entity.Questionnaire;
+import com.zyght.riesgopsicosocial.handler.SendQuestionnaireAPIHandler;
+import com.zyght.riesgopsicosocial.network.ResponseActionDelegate;
+import com.zyght.riesgopsicosocial.session.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +33,13 @@ import java.util.List;
  * Created by Arley Mauricio Duarte on 5/2/17.
  */
 
-public class SurveyActivity extends AppCompatActivity {
-    private static  final String TAG = "SurveyActivity";
+public class SurveyActivity extends AppCompatActivity implements ResponseActionDelegate {
+    private static final String TAG = "SurveyActivity";
     private Spinner questionSpinner;
     private TextView questionText;
     private Question question;
 
-    private int QUESTIONNAIRE =1;
+    private int QUESTIONNAIRE = 1;
     private List<Option> optionsL;
     private EditText descriptionTextView;
 
@@ -47,7 +50,10 @@ public class SurveyActivity extends AppCompatActivity {
     private List<Category> categories;
     private ArrayList<Question> questions = new ArrayList<>();
 
-    private int questionIndex =0;
+
+    private ArrayList<Answer> answers = new ArrayList<>();
+
+    private int questionIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +65,17 @@ public class SurveyActivity extends AppCompatActivity {
         descriptionTextView = (EditText) findViewById(R.id.description_edit_text);
 
         Intent intent = getIntent();
-        questionnaire =  (Questionnaire)intent.getSerializableExtra("QUESTIONNAIRE");
+        questionnaire = (Questionnaire) intent.getSerializableExtra("QUESTIONNAIRE");
         categories = questionnaire.getCategories();
 
 
-
-        for(Category category : categories){
-            for(Question aQuestion : category.getQuestions()){
+        for (Category category : categories) {
+            for (Question aQuestion : category.getQuestions()) {
                 questions.add(aQuestion);
             }
         }
 
         fillData();
-
-
-
 
 
         AppCompatButton report = (AppCompatButton) findViewById(R.id.report_button);
@@ -88,7 +90,7 @@ public class SurveyActivity extends AppCompatActivity {
 
     }
 
-    private void  fillData(){
+    private void fillData() {
 
 
         if (!questions.isEmpty() && questionIndex < questions.size()) {
@@ -96,7 +98,7 @@ public class SurveyActivity extends AppCompatActivity {
             questionText.setText(question.getTitle());
 
 
-            if(question.getType() == QuestionBLL.SINGLE_OPTION){
+            if (question.getType() == QuestionBLL.SINGLE_OPTION) {
 
                 descriptionTextView.setVisibility(View.GONE);
                 questionSpinner.setVisibility(View.VISIBLE);
@@ -114,7 +116,7 @@ public class SurveyActivity extends AppCompatActivity {
 
             }
 
-            if(question.getType() == QuestionBLL.NUMBER_OPTION){
+            if (question.getType() == QuestionBLL.NUMBER_OPTION) {
                 descriptionTextView.setVisibility(View.VISIBLE);
                 questionSpinner.setVisibility(View.GONE);
             }
@@ -122,35 +124,36 @@ public class SurveyActivity extends AppCompatActivity {
         }
 
     }
+
     private Answer getAnswer() {
-     Answer response = null;
-        if(isValidForm()){
+        Answer response = null;
+        if (isValidForm()) {
 
             response = new Answer();
             response.setQuestionId(question.getId());
 
-            if(question.getType() == QuestionBLL.SINGLE_OPTION){
+            if (question.getType() == QuestionBLL.SINGLE_OPTION) {
 
-                try{
+                try {
                     int optionIndex = questionSpinner.getSelectedItemPosition();
-                    Option selectedOption  = optionsL.get(optionIndex);
+                    Option selectedOption = optionsL.get(optionIndex - 1);
                     response.setQuestionOptionId(selectedOption.getId());
 
-                    Log.e(TAG, "optionIndex:"+optionIndex+" Question:"+question.getId());
-                }catch (Exception e){
+                    Log.e(TAG, "optionIndex:" + optionIndex + " Question:" + question.getId());
+                } catch (Exception e) {
 
                     Log.e(TAG, e.getMessage());
                 }
 
             }
 
-            if(question.getType() == QuestionBLL.NUMBER_OPTION){
+            if (question.getType() == QuestionBLL.NUMBER_OPTION) {
                 response.setValue(descriptionTextView.getText().toString());
             }
 
         }
 
-        return  response;
+        return response;
     }
 
     public void nextQuestion() {
@@ -158,19 +161,15 @@ public class SurveyActivity extends AppCompatActivity {
 
         Answer answer = getAnswer();
 
-        if(answer != null){
-            questionBLL.add(answer);
-
-
-
-
+        if (answer != null) {
+            answers.add(answer);
 
 
             if (questionIndex == questions.size()) {
                 saveData();
 
 
-            }else{
+            } else {
                 questionIndex++;
                 fillData();
             }
@@ -178,15 +177,12 @@ public class SurveyActivity extends AppCompatActivity {
         }
 
 
-
-
-
     }
 
-    private void saveData(){
+    private void saveData() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-// Add the buttons
+
 
         builder.setTitle("Guardar");
         builder.setMessage("¿Desea guardar y enviar la información de su encuesta?");
@@ -207,44 +203,55 @@ public class SurveyActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void send(){
+    private void send() {
         Gson gson = new Gson();
 
-        Toast.makeText(this, "Se ha enviado", Toast.LENGTH_LONG).show();
 
-        //registerBLL.getChecklistRegister().setAnswers(gson.toJson(registerBLL.getAnswers()));
-        //ChecklistResourceHandler resourceHandler = new ChecklistResourceHandler(registerBLL.getChecklistRegister());
-        //resourceHandler.setRequestHandle(this, this);2
+        String sAnswers = gson.toJson(answers);
+        String jobPositionId = String.valueOf(questionBLL.getSelectedPosition().getId());
+        String sQuestionnaireId = String.valueOf(questionnaire.getId());
+
+        SendQuestionnaireAPIHandler resourceHandler = new SendQuestionnaireAPIHandler(sAnswers, jobPositionId, sQuestionnaireId);
+        resourceHandler.setRequestHandle(this, this);
     }
 
     private boolean isValidForm() {
         boolean isValid = false;
 
 
-        if(question.getType() == QuestionBLL.SINGLE_OPTION){
+        if (question.getType() == QuestionBLL.SINGLE_OPTION) {
             if (questionSpinner.getSelectedItem() != null && !TextUtils.isEmpty(questionSpinner.getSelectedItem().toString())) {
                 isValid = true;
-            }else{
+            } else {
                 Toast.makeText(this, "Se debe seleccionar una respuesta", Toast.LENGTH_LONG).show();
             }
 
         }
-        if(question.getType() == QuestionBLL.NUMBER_OPTION){
+        if (question.getType() == QuestionBLL.NUMBER_OPTION) {
 
-            if(TextUtils.isEmpty(descriptionTextView.getText().toString())){
+            if (TextUtils.isEmpty(descriptionTextView.getText().toString())) {
                 Toast.makeText(this, "Se debe  ingresar una respuesta", Toast.LENGTH_LONG).show();
                 isValid = false;
-            }else{
+            } else {
                 isValid = true;
             }
 
 
         }
-
 
 
         return isValid;
     }
 
 
+    @Override
+    public void didSuccessfully(String message) {
+        Toast.makeText(this, "Se ha enviado la información", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    @Override
+    public void didNotSuccessfully(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
 }

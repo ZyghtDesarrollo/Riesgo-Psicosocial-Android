@@ -48,13 +48,15 @@ public class LoginAPIHandler extends APIResourceHandler {
     @Override
     public void handlerAPIResponse(APIResponse apiResponse) {
 
-        //TODO:
-        InitialAPIHandler initialAPIHandler = new InitialAPIHandler();
-        initialAPIHandler.setRequestHandle(getResponseActionDelegate(), getContext());
 
-        /*
+
+
+
         if (apiResponse.getStatus().isSuccess()) {
             extractToken(apiResponse.getRawResponse());
+
+            InitialAPIHandler initialAPIHandler = new InitialAPIHandler();
+            initialAPIHandler.setRequestHandle(getResponseActionDelegate(), getContext());
 
 
 
@@ -62,7 +64,7 @@ public class LoginAPIHandler extends APIResourceHandler {
         } else {
             getResponseActionDelegate().didNotSuccessfully(apiResponse.getStatus().getErrorCode());
         }
-*/
+
     }
 
 
@@ -75,9 +77,12 @@ public class LoginAPIHandler extends APIResourceHandler {
             token = object.getString("access_token");
 
 
+            String companyId = object.getJSONObject("user").getString("id");
+
             Gson gson = new Gson();
 
             User user = gson.fromJson(object.getString("user"), User.class);
+            user.setCompanyId(companyId);
             Session.getInstance().setUser(user);
 
         } catch (JSONException e) {
@@ -91,9 +96,7 @@ public class LoginAPIHandler extends APIResourceHandler {
 
     @Override
     public String getServiceURL() {
-        //return ResourcesConstants.BASE_URL + "/token";
-
-        return "http://trayectoseguro.azurewebsites.net/index.php/api/ruser/login";
+        return ResourcesConstants.BASE_URL + "/rcompany/login";
     }
 
     @Override

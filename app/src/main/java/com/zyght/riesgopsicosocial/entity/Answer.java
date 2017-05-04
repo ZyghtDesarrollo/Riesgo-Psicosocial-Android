@@ -7,7 +7,7 @@ package com.zyght.riesgopsicosocial.entity;
 public class Answer {
     private int questionId;
     private  int questionOptionId;
-    private String value;
+    private String value="";
 
     public int getQuestionId() {
         return questionId;

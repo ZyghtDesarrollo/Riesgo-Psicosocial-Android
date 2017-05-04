@@ -183,8 +183,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (BuildConfig.DEBUG) {
 
-                password = "1234";
-                code = "3";
+                password = "demo1234";
+                code = "123";
             }
 
             LoginAPIHandler resourceHandler = new LoginAPIHandler(password, code);
@@ -294,13 +294,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void didNotSuccessfully(String message) {
         Toast.makeText(this, "El nombre de usuario, la clave o el código de empresa son incorrectos", Toast.LENGTH_SHORT).show();
 
-        //TODO: Remove
-
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-
-        // close this activity
-        finish();
     }
 
 

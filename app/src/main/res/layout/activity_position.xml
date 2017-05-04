@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+
+        <TextView
+            android:id="@+id/question_text"
+            style="@style/form_secondary_text"
+            android:text="Debe seleccionar el cargo en la compañia"
+            android:layout_marginTop="10dp"/>
+
+        <Spinner
+            android:id="@+id/question_spinner"
+            style="@style/form_spinner_style"
+            android:layout_marginTop="10dp"/>
+
+
+
+
+
+
+
+
+
+
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/report_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/corporate_color"
+            android:padding="12dp"
+            android:text="@string/next"
+            android:textColor="@android:color/white"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

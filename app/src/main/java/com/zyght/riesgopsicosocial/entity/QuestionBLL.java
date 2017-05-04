@@ -14,13 +14,22 @@ public class QuestionBLL {
     private static final QuestionBLL ourInstance = new QuestionBLL();
     public static final int SINGLE_OPTION = 1;
     public static final int NUMBER_OPTION = 2;
+    private ArrayList<Recommendation> recommendations = new ArrayList<>();
 
 
-    private ArrayList<Answer> answers = new ArrayList<>();
     private ArrayList<Questionnaire> questionnaires = new ArrayList<>();
 
+    private ArrayList<Position> positions = new ArrayList<>();
 
+    private Position selectedPosition;
 
+    public Position getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public void setSelectedPosition(Position selectedPosition) {
+        this.selectedPosition = selectedPosition;
+    }
 
     public static QuestionBLL getInstance() {
         return ourInstance;
@@ -36,7 +45,9 @@ public class QuestionBLL {
 
 
 
-
+    public void add(Position position){
+        positions.add(position);
+    }
 
 
     public void clear() {
@@ -63,23 +74,37 @@ public class QuestionBLL {
         return names;
     }
 
+
+    public  String[] getPositionsString(List<Position> optionsL) {
+
+        String[] names = new String[optionsL.size()+1];
+
+        names[0] ="";
+        int i = 1;
+        for (Position r : optionsL) {
+            names[i] = r.getPosition();
+            i++;
+        }
+        return names;
+    }
+
     public ArrayList<Questionnaire> getQuestionnaires() {
         return questionnaires;
     }
 
 
 
-    public void add(Answer answer) {
-        answers.add(answer);
+
+
+    public ArrayList<Position> getPositions() {
+        return positions;
     }
 
+    public ArrayList<Recommendation> getRecommendations() {
+        return recommendations;
+    }
 
-
-    private class  LongOperation extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            return null;
-        }
+    public void add(Recommendation recommendation){
+        recommendations.add(recommendation);
     }
 }
