@@ -25,7 +25,7 @@ import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_TIME_OUT = 2000;
+    private static final int SPLASH_TIME_OUT = 3000;
 
 
     @Override
@@ -68,106 +68,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-    private void testJSON(){
-        Gson gson = new Gson();
-
-        Category category = new Category();
-        category.setId(1);
-        category.setTitle("Test");
 
 
-        Question question0 = new Question();
-        question0.setId(1);
-        question0.setType(QuestionBLL.NUMBER_OPTION);
-        question0.setQuestionary_id(1);
-        question0.setTitle("¿Está preocupado por\n" +
-                "si le cambian de tareas\n" +
-                "contra su voluntad numerowe?");
-
-
-        Option questionOptions  = new Option();
-        questionOptions.setTitle("Siempre");
-        questionOptions.setId(1);
-        questionOptions.setQuestion_id(2);
-
-        Option questionOptions2  = new Option();
-
-        questionOptions2.setTitle("Sólo unas " +
-                "pocas " +
-                "veces");
-        questionOptions2.setId(1);
-        questionOptions2.setQuestion_id(2);
-
-
-        ArrayList<Option> arrayListOption = new ArrayList<>();
-        arrayListOption.add(questionOptions);
-        arrayListOption.add(questionOptions2);
-
-        question0.setOptions(arrayListOption);
-
-
-        ArrayList<Question> arrayList = new ArrayList<>();
-        arrayList.add(question0);
-
-        category.setQuestions(arrayList);
-
-        Questionnaire questionnaire = new Questionnaire();
-        questionnaire.setId(1);
-        questionnaire.setName("Corto");
-
-        ArrayList<Category> categories = new ArrayList<>();
-        categories.add(category);
-        questionnaire.setCategories(categories);
-
-
-        ArrayList<Questionnaire> questionnaires = new ArrayList<>();
-        questionnaires.add(questionnaire);
-
-        Questionnaire questionnaire1 = new Questionnaire();
-        questionnaire1.setId(1);
-        questionnaire1.setName("Largo");
-        questionnaires.add(questionnaire1);
-
-        String json = gson.toJson(questionnaires);
-
-        Log.e("TEST", json);
-
-        List<Questionnaire> list = gson.fromJson(json, new TypeToken<List<Questionnaire>>(){}.getType());
-
-        for (Questionnaire q : list){
-            Log.e("TEST", q.getName());
-        }
-
-
-        Answer answer = new Answer();
-
-        answer.setQuestionId(1);
-        answer.setQuestionOptionId(12);
-        answer.setValue("");
-
-
-
-        Answer answer1 = new Answer();
-
-        answer1.setQuestionId(1);
-        answer1.setQuestionOptionId(0);
-        answer1.setValue("6 meses");
-
-
-        ArrayList<Answer> answers = new ArrayList<>();
-        answers.add(answer);
-        answers.add(answer1);
-
-
-        String jsonA = gson.toJson(answers);
-
-        Log.e("TEST", jsonA);
-    }
-
-
-
-
-    private static final int REQUEST_READ_CONTACTS = 0;
 
 
 

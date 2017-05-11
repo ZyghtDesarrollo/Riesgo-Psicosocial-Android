@@ -77,7 +77,7 @@ public class LoginAPIHandler extends APIResourceHandler {
             token = object.getString("access_token");
 
 
-            String companyId = object.getJSONObject("user").getString("id");
+            String companyId = object.getJSONObject("user").getString("company_id");
 
             Gson gson = new Gson();
 
@@ -96,7 +96,8 @@ public class LoginAPIHandler extends APIResourceHandler {
 
     @Override
     public String getServiceURL() {
-        return ResourcesConstants.BASE_URL + "/rcompany/login";
+        //http://riesgopsicosocial.azurewebsites.net/index.php/api/rrandomuser/login
+        return ResourcesConstants.BASE_URL + "/rrandomuser/login";
     }
 
     @Override

@@ -15,7 +15,7 @@
         <TextView
             android:id="@+id/question_text"
             style="@style/form_secondary_text"
-            android:text="Debe seleccionar el cargo en la compañia"
+            android:text="Debe seleccionar el puesto de trabajo"
             android:layout_marginTop="10dp"/>
 
         <Spinner

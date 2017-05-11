@@ -57,18 +57,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showNext(int position){
-
+        Intent intent = new Intent(this, PositionActivity.class);
         if(position < questionnaires.size()){
             Questionnaire questionnaire = questionnaires.get(position);
-            Intent intent = new Intent(this, PositionActivity.class);
-            intent.putExtra("QUESTIONNAIRE", questionnaire);
-            startActivity(intent);
-        }else{
-            Intent intent = new Intent(this, RecommendationsActivity.class);
-            startActivity(intent);
+           intent.putExtra("QUESTIONNAIRE", questionnaire);
         }
 
 
-
+        startActivity(intent);
     }
 }

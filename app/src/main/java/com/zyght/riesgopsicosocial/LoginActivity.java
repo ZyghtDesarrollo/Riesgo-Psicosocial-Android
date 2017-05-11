@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (BuildConfig.DEBUG) {
 
-                password = "demo1234";
+                password = "m83EH0KecIXrQjDp";
                 code = "123";
             }
 
@@ -292,7 +292,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     public void didNotSuccessfully(String message) {
-        Toast.makeText(this, "El nombre de usuario, la clave o el código de empresa son incorrectos", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "La Contraseña o el Código de Empresa son incorrectos", Toast.LENGTH_SHORT).show();
 
     }
 

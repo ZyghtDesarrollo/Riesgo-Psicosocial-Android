@@ -17,6 +17,7 @@ import com.zyght.riesgopsicosocial.entity.Position;
 import com.zyght.riesgopsicosocial.entity.Question;
 import com.zyght.riesgopsicosocial.entity.QuestionBLL;
 import com.zyght.riesgopsicosocial.entity.Questionnaire;
+import com.zyght.riesgopsicosocial.entity.Recommendation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,10 +84,21 @@ public class PositionActivity extends AppCompatActivity {
 
 
             Intent intentO = getIntent();
+
+
             Questionnaire questionnaire =  (Questionnaire)intentO.getSerializableExtra("QUESTIONNAIRE");
-            Intent intent = new Intent(this, SurveyActivity.class);
-            intent.putExtra("QUESTIONNAIRE", questionnaire);
-            startActivity(intent);
+            if(questionnaire != null){
+                Intent intent = new Intent(this, SurveyActivity.class);
+                intent.putExtra("QUESTIONNAIRE", questionnaire);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(this, RecommendationsActivity.class);
+                startActivity(intent);
+            }
+
+
+
             finish();
         }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Riesgo Psicosocial</string>
+    <string name="app_name">Riesgos Psicosociales</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">La contraseña es muy corta</string>
     <string name="error_incorrect_password">This password is incorrect</string>
