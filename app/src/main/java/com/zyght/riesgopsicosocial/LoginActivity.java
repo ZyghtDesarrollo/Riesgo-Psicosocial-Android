@@ -183,8 +183,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (BuildConfig.DEBUG) {
 
-                password = "m83EH0KecIXrQjDp";
-                code = "123";
+              //  password = "m83EH0KecIXrQjDp";
+               // code = "123";
             }
 
             LoginAPIHandler resourceHandler = new LoginAPIHandler(password, code);

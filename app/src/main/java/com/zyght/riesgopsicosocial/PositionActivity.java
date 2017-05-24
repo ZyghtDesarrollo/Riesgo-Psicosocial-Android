@@ -94,6 +94,7 @@ public class PositionActivity extends AppCompatActivity {
             }
             else{
                 Intent intent = new Intent(this, RecommendationsActivity.class);
+
                 startActivity(intent);
             }
 

@@ -34,9 +34,6 @@ public class SendQuestionnaireAPIHandler extends APIResourceHandler {
     }
 
 
-    public boolean isNeedAuthToken() {
-        return false;
-    }
 
     @Override
     public List<NameValuePair> getValueParams() {

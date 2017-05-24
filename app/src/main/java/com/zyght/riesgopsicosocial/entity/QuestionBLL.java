@@ -15,13 +15,26 @@ public class QuestionBLL {
     public static final int SINGLE_OPTION = 1;
     public static final int NUMBER_OPTION = 2;
     private ArrayList<Recommendation> recommendations = new ArrayList<>();
-
+    private ArrayList<RpMember> members = new ArrayList<>();
 
     private ArrayList<Questionnaire> questionnaires = new ArrayList<>();
 
     private ArrayList<Position> positions = new ArrayList<>();
 
+    private boolean hasSurvey = false;
+
+    public boolean HasSurvey() {
+        return hasSurvey;
+    }
+
+    public void setHasSurvey(boolean hasSurvey) {
+        this.hasSurvey = hasSurvey;
+    }
+
     private Position selectedPosition;
+    public ArrayList<RpMember> getMembers(){
+        return  members;
+    }
 
     public Position getSelectedPosition() {
         return selectedPosition;
@@ -106,5 +119,9 @@ public class QuestionBLL {
 
     public void add(Recommendation recommendation){
         recommendations.add(recommendation);
+    }
+
+    public void add(RpMember q) {
+        members.add(q);
     }
 }

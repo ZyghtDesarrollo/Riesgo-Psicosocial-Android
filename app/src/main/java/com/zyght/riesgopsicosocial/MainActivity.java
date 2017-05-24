@@ -12,14 +12,17 @@ import android.widget.Toast;
 
 import com.zyght.riesgopsicosocial.entity.QuestionBLL;
 import com.zyght.riesgopsicosocial.entity.Questionnaire;
+import com.zyght.riesgopsicosocial.handler.GetHasSurvey;
+import com.zyght.riesgopsicosocial.network.ResponseActionDelegate;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ResponseActionDelegate {
 
 
     private ListView mListView;
     private ArrayList<Questionnaire> questionnaires;
+    private boolean hasSurvey = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +33,17 @@ public class MainActivity extends AppCompatActivity {
         questionnaires = QuestionBLL.getInstance().getQuestionnaires();
         mListView = (ListView) findViewById(R.id.list_view);
 
-        String[] listItems = new String[questionnaires.size()+1];
+        String[] listItems = new String[questionnaires.size()+2];
+        listItems[0] = "Equipo Psicosocial";
 
-        int i=0;
+        int i=1;
         for (Questionnaire questionnaire : questionnaires){
             listItems[i] = questionnaire.getName();
             i++;
         }
 
         listItems[listItems.length-1] = "Recomendaciones";
+
 
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
@@ -54,16 +59,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        GetHasSurvey getHasSurvey = new GetHasSurvey();
+        getHasSurvey.setRequestHandle(this, this);
+
     }
 
     private void showNext(int position){
-        Intent intent = new Intent(this, PositionActivity.class);
-        if(position < questionnaires.size()){
-            Questionnaire questionnaire = questionnaires.get(position);
-           intent.putExtra("QUESTIONNAIRE", questionnaire);
+
+
+        if(position == 0){
+            Intent intent = new Intent(this, MembersActivity.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, PositionActivity.class);
+
+
+            if(position < questionnaires.size()){
+                Questionnaire questionnaire = questionnaires.get(position);
+                intent.putExtra("QUESTIONNAIRE", questionnaire);
+            }
+
+            if(position ==1 || position == 2){
+                if(hasSurvey){
+                    Toast.makeText(this, "No puede volver a responder la encuesta", Toast.LENGTH_LONG).show();
+                }else{
+                    startActivity(intent);
+                }
+            }
+
+            if(position == 3){
+                startActivity(intent);
+            }
+
+
         }
 
+    }
 
-        startActivity(intent);
+    @Override
+    public void didSuccessfully(String message) {
+        hasSurvey = QuestionBLL.getInstance().HasSurvey();
+    }
+
+    @Override
+    public void didNotSuccessfully(String message) {
+
     }
 }

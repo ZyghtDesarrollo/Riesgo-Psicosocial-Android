@@ -96,6 +96,7 @@ public class SurveyActivity extends AppCompatActivity implements ResponseActionD
         if (!questions.isEmpty() && questionIndex < questions.size()) {
             question = questions.get(questionIndex);
             questionText.setText(question.getTitle());
+            descriptionTextView.setText("");
 
 
             if (question.getType() == QuestionBLL.SINGLE_OPTION) {
@@ -109,7 +110,7 @@ public class SurveyActivity extends AppCompatActivity implements ResponseActionD
                 //ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, questionBLL.getOptionsString(optionsL));
                 //dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_full_text, questionBLL.getOptionsString(optionsL));
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dataAdapter.setDropDownViewResource(R.layout.multiline_spinner_dropdown_item);
 
                 questionSpinner.setAdapter(dataAdapter);
                 dataAdapter.notifyDataSetChanged();
@@ -165,7 +166,7 @@ public class SurveyActivity extends AppCompatActivity implements ResponseActionD
             answers.add(answer);
 
 
-            if (questionIndex == questions.size()) {
+            if (questionIndex == questions.size()-1) {
                 saveData();
 
 
@@ -247,6 +248,7 @@ public class SurveyActivity extends AppCompatActivity implements ResponseActionD
     @Override
     public void didSuccessfully(String message) {
         Toast.makeText(this, "Se ha enviado la información", Toast.LENGTH_LONG).show();
+        questionBLL.setHasSurvey(true);
         finish();
     }
 

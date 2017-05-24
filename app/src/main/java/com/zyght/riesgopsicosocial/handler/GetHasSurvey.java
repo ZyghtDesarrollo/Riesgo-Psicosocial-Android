@@ -4,7 +4,6 @@ package com.zyght.riesgopsicosocial.handler;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.zyght.riesgopsicosocial.entity.Position;
 import com.zyght.riesgopsicosocial.entity.QuestionBLL;
 import com.zyght.riesgopsicosocial.entity.Recommendation;
 import com.zyght.riesgopsicosocial.network.APIResourceHandler;
@@ -19,12 +18,10 @@ import org.json.JSONObject;
  * Created by Arley Mauricio Duarte on 3/24/17.
  */
 
-public class GetRecommendations extends APIResourceHandler {
+public class GetHasSurvey extends APIResourceHandler {
 
-    String jobId = "";
-    public GetRecommendations(String jobId){
-        this.jobId = jobId;
-    }
+
+
 
     @Override
     public void handlerAPIResponse(APIResponse apiResponse) {
@@ -43,27 +40,19 @@ public class GetRecommendations extends APIResourceHandler {
 
     private void extract(String apiResponse) {
 
-        String response = "";
+        boolean response = false;
 
         QuestionBLL questionBLL = QuestionBLL.getInstance();
-        questionBLL.getRecommendations().clear();
+
 
         try {
             JSONObject object = new JSONObject(apiResponse);
-            response = object.getString("response");
+            response = object.getBoolean("response");
+
+            questionBLL.setHasSurvey(response);
 
 
-            Gson gson = new Gson();
 
-            Recommendation[] arr = gson.fromJson(response, Recommendation[].class);
-
-            for (int i = 0; i < arr.length; i++) {
-                Recommendation q = arr[i];
-                questionBLL.add(q);
-
-            }
-
-            Log.d("GetRecommendations", arr.toString());
 
 
         } catch (JSONException e) {
@@ -76,7 +65,7 @@ public class GetRecommendations extends APIResourceHandler {
 
     @Override
     public String getServiceURL() {
-        return ResourcesConstants.BASE_URL + "/rrecommendation/list_by_params?company_id="+Session.getInstance().getUser().getCompanyId()+"&job_position_id="+jobId;
+        return ResourcesConstants.BASE_URL + "/rquestionary/has_random_user_a_questionary?random_user_id="+Session.getInstance().getUser().getId();
     }
 
     @Override
