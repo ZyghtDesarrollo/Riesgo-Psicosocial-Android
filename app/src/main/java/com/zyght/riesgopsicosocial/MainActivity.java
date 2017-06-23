@@ -74,12 +74,12 @@ public class MainActivity extends AppCompatActivity implements ResponseActionDel
             Intent intent = new Intent(this, PositionActivity.class);
 
 
-            if(position < questionnaires.size()){
-                Questionnaire questionnaire = questionnaires.get(position);
+            if(position <= questionnaires.size()){
+                Questionnaire questionnaire = questionnaires.get(0);
                 intent.putExtra("QUESTIONNAIRE", questionnaire);
             }
 
-            if(position ==1 || position == 2){
+            if(position ==1){
                 if(hasSurvey){
                     Toast.makeText(this, "No puede volver a responder la encuesta", Toast.LENGTH_LONG).show();
                 }else{
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ResponseActionDel
                 }
             }
 
-            if(position == 3){
+            if(position == 2){
                 startActivity(intent);
             }
 
