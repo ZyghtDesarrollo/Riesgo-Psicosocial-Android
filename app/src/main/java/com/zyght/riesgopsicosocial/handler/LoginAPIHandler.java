@@ -2,6 +2,8 @@ package com.zyght.riesgopsicosocial.handler;
 
 
 import com.google.gson.Gson;
+import com.zyght.riesgopsicosocial.NotificationToken;
+import com.zyght.riesgopsicosocial.config.ResourcesConstants;
 import com.zyght.riesgopsicosocial.network.APIResourceHandler;
 import com.zyght.riesgopsicosocial.network.APIResponse;
 import com.zyght.riesgopsicosocial.network.HttpMethod;
@@ -29,6 +31,8 @@ public class LoginAPIHandler extends APIResourceHandler {
 
         this.password = password;
         this.code = code;
+
+        Session.getInstance().COMPANY_CODE = code;
     }
 
 
@@ -42,6 +46,7 @@ public class LoginAPIHandler extends APIResourceHandler {
 
         nameValuePairs.add(new BasicNameValuePair("password", password));
         nameValuePairs.add(new BasicNameValuePair("code", code));
+        nameValuePairs.add(new BasicNameValuePair("deviceToken", NotificationToken.getInstance().getRefreshedToken(getContext())));
         return nameValuePairs;
     }
 

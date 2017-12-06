@@ -12,6 +12,9 @@ public class Session {
 
     private static final String PREFS_NAME = "Session";
     private static final String TOKEN_NAME = "token";
+
+    public   String COMPANY_CODE = "";
+
     private static Session ourInstance = new Session();
 
     private User user;

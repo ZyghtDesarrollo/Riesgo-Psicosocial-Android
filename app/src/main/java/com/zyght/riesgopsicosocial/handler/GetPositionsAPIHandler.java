@@ -4,6 +4,7 @@ package com.zyght.riesgopsicosocial.handler;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.zyght.riesgopsicosocial.config.ResourcesConstants;
 import com.zyght.riesgopsicosocial.entity.Position;
 import com.zyght.riesgopsicosocial.entity.QuestionBLL;
 import com.zyght.riesgopsicosocial.network.APIResourceHandler;
