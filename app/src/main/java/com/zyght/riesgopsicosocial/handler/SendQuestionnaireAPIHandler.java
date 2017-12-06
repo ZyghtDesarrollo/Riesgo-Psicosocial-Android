@@ -1,17 +1,13 @@
 package com.zyght.riesgopsicosocial.handler;
 
 
-import com.google.gson.Gson;
+import com.zyght.riesgopsicosocial.config.ResourcesConstants;
 import com.zyght.riesgopsicosocial.network.APIResourceHandler;
 import com.zyght.riesgopsicosocial.network.APIResponse;
 import com.zyght.riesgopsicosocial.network.HttpMethod;
-import com.zyght.riesgopsicosocial.session.Session;
-import com.zyght.riesgopsicosocial.session.User;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

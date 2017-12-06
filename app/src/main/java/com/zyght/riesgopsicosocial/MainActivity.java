@@ -1,8 +1,10 @@
 package com.zyght.riesgopsicosocial;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,12 +16,14 @@ import com.zyght.riesgopsicosocial.entity.QuestionBLL;
 import com.zyght.riesgopsicosocial.entity.Questionnaire;
 import com.zyght.riesgopsicosocial.handler.GetHasSurvey;
 import com.zyght.riesgopsicosocial.network.ResponseActionDelegate;
+import com.zyght.riesgopsicosocial.session.Session;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements ResponseActionDelegate {
 
 
+    private static final String TAG = "MainActivity";
     private ListView mListView;
     private ArrayList<Questionnaire> questionnaires;
     private boolean hasSurvey = false;
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ResponseActionDel
         questionnaires = QuestionBLL.getInstance().getQuestionnaires();
         mListView = (ListView) findViewById(R.id.list_view);
 
-        String[] listItems = new String[questionnaires.size()+2];
+        String[] listItems = new String[questionnaires.size()+3];
         listItems[0] = "Equipo Psicosocial";
 
         int i=1;
@@ -42,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements ResponseActionDel
             i++;
         }
 
-        listItems[listItems.length-1] = "Recomendaciones";
-
+        listItems[listItems.length-2] = "Recomendaciones";
+        listItems[listItems.length-1] = "Bitácora de Procesos";
 
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
@@ -91,6 +95,12 @@ public class MainActivity extends AppCompatActivity implements ResponseActionDel
                 startActivity(intent);
             }
 
+            else if(position == 3){
+                String url = "http://riesgopsicosocial.azurewebsites.net/index.php/billboard/show/"+ Session.getInstance().COMPANY_CODE;
+                Intent intentP = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(url));
+                Log.i(TAG, url);
+                startActivity(intentP);
+            }
 
         }
 
