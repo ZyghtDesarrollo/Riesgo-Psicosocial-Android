@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zyght.riesgopsicosocial.entity.Recommendation;
@@ -22,11 +23,13 @@ public class MembersListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<RpMember> mDataSource;
+    private EmailDelegate emailDelegate;
 
-    public MembersListAdapter(Context context, ArrayList<RpMember> items) {
+    public MembersListAdapter(Context context, ArrayList<RpMember> items, EmailDelegate emailDelegate) {
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.emailDelegate = emailDelegate;
     }
 
 
@@ -51,7 +54,7 @@ public class MembersListAdapter extends BaseAdapter {
 
 
         ViewHolder holder;
-        RpMember entity = mDataSource.get(position);
+        final RpMember entity = mDataSource.get(position);
 
 
         if (convertView == null) {
@@ -60,10 +63,22 @@ public class MembersListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.title);
             holder.subTitle = (TextView) convertView.findViewById(R.id.subtitle);
-
+            holder.email = (ImageButton) convertView.findViewById(R.id.email);
 
             holder.title.setText(entity.getName());
             holder.subTitle.setText(entity.getEmail());
+
+
+
+            holder.email.setOnClickListener(new View.OnClickListener()   {
+                public void onClick(View v)  {
+                    try {
+                        emailDelegate.emailOnClick(entity.getEmail());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
             convertView.setTag(holder);
         } else {
@@ -81,8 +96,14 @@ public class MembersListAdapter extends BaseAdapter {
 
         TextView title;
         TextView subTitle;
+        ImageButton email;
 
 
 
     }
+
+    public  interface  EmailDelegate {
+        public void emailOnClick(String email);
+    }
+
 }
