@@ -64,6 +64,8 @@ public class MembersListAdapter extends BaseAdapter {
             holder.title = (TextView) convertView.findViewById(R.id.title);
             holder.subTitle = (TextView) convertView.findViewById(R.id.subtitle);
             holder.email = (ImageButton) convertView.findViewById(R.id.email);
+            holder.phone = (ImageButton) convertView.findViewById(R.id.phone);
+
 
             holder.title.setText(entity.getName());
             holder.subTitle.setText(entity.getEmail());
@@ -74,6 +76,17 @@ public class MembersListAdapter extends BaseAdapter {
                 public void onClick(View v)  {
                     try {
                         emailDelegate.emailOnClick(entity.getEmail());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+
+            holder.phone.setOnClickListener(new View.OnClickListener()   {
+                public void onClick(View v)  {
+                    try {
+                        emailDelegate.callOnClick(entity.getPhone());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -97,6 +110,7 @@ public class MembersListAdapter extends BaseAdapter {
         TextView title;
         TextView subTitle;
         ImageButton email;
+        ImageButton phone;
 
 
 
@@ -104,6 +118,7 @@ public class MembersListAdapter extends BaseAdapter {
 
     public  interface  EmailDelegate {
         public void emailOnClick(String email);
+        public void callOnClick(String phone);
     }
 
 }
