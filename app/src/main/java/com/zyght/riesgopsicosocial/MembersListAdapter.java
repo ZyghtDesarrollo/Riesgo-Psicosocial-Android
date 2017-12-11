@@ -1,6 +1,7 @@
 package com.zyght.riesgopsicosocial;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,11 +66,14 @@ public class MembersListAdapter extends BaseAdapter {
             holder.subTitle = (TextView) convertView.findViewById(R.id.subtitle);
             holder.email = (ImageButton) convertView.findViewById(R.id.email);
             holder.phone = (ImageButton) convertView.findViewById(R.id.phone);
-
+            holder.phoneNumber = (TextView) convertView.findViewById(R.id.phone_number);
 
             holder.title.setText(entity.getName());
             holder.subTitle.setText(entity.getEmail());
 
+            if(!TextUtils.isEmpty(entity.getPhone())){
+                holder.phoneNumber.setText(entity.getPhone());
+            }
 
 
             holder.email.setOnClickListener(new View.OnClickListener()   {
@@ -111,7 +115,7 @@ public class MembersListAdapter extends BaseAdapter {
         TextView subTitle;
         ImageButton email;
         ImageButton phone;
-
+        TextView phoneNumber;
 
 
     }
