@@ -19,6 +19,7 @@ import com.zyght.riesgopsicosocial.entity.Questionnaire;
 import com.zyght.riesgopsicosocial.entity.Recommendation;
 import com.zyght.riesgopsicosocial.handler.GetRecommendations;
 import com.zyght.riesgopsicosocial.handler.LoginAPIHandler;
+import com.zyght.riesgopsicosocial.handler.RegisterRecomendationViewAPIHandler;
 import com.zyght.riesgopsicosocial.network.ResponseActionDelegate;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
  * Created by Arley Mauricio Duarte on 5/2/17.
  */
 
-public class RecommendationsActivity extends AppCompatActivity implements ResponseActionDelegate{
+public class RecommendationsActivity extends AppCompatActivity implements ResponseActionDelegate, RecommendationsListAdapter.OnRecommendationListener{
     private static  final String TAG = "RecommendationsActivity";
 
     private QuestionBLL questionBLL = QuestionBLL.getInstance();
@@ -47,15 +48,6 @@ public class RecommendationsActivity extends AppCompatActivity implements Respon
 
 
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TextView v = (TextView) view.findViewById(android.R.id.text1);
-                //Toast.makeText(getApplicationContext(), "selected Item Name is " + v.getText(), Toast.LENGTH_LONG).show();
-
-                show(position);
-            }
-        });
 
         Position position = questionBLL.getSelectedPosition();
 
@@ -66,22 +58,12 @@ public class RecommendationsActivity extends AppCompatActivity implements Respon
 
     }
 
-    private void show(int position){
-        Recommendation recommendation = mDataSource.get(position);
-
-
-        String url = recommendation.getLink();
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        startActivity(i);
-
-    }
 
 
     @Override
     public void didSuccessfully(String message) {
         mDataSource = questionBLL.getRecommendations();
-        adapter = new RecommendationsListAdapter(this, mDataSource);
+        adapter = new RecommendationsListAdapter(this, mDataSource, this);
         mListView.setAdapter(adapter);
 
 
@@ -90,5 +72,17 @@ public class RecommendationsActivity extends AppCompatActivity implements Respon
     @Override
     public void didNotSuccessfully(String message) {
 
+    }
+
+    @Override
+    public void onRecommendationClick(Recommendation recommendation) {
+        String url = recommendation.getLink();
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        RegisterRecomendationViewAPIHandler handler = new RegisterRecomendationViewAPIHandler(recommendation);
+        handler.setShowWaitingDialog(false);
+        handler.setRequestHandle(this, this);
+
+        startActivity(i);
     }
 }
