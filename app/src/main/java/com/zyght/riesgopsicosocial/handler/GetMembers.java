@@ -74,7 +74,7 @@ public class GetMembers extends APIResourceHandler {
 
     @Override
     public String getServiceURL() {
-        return ResourcesConstants.BASE_URL + "/rpsicomember/list_by_company_id?company_id="+Session.getInstance().getUser().getCompanyId();
+        return ResourcesConstants.BASE_URL + "/rpsicomember/list_by_company_id?company_id="+Session.getInstance().getUser().getCompanyId()+"&active=true";
     }
 
     @Override

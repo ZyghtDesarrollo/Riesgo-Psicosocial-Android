@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zyght.riesgopsicosocial.entity.Recommendation;
@@ -21,11 +22,13 @@ public class RecommendationsListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Recommendation> mDataSource;
+    private OnRecommendationListener onRecommendationListener;
 
-    public RecommendationsListAdapter(Context context, ArrayList<Recommendation> items) {
+    public RecommendationsListAdapter(Context context, ArrayList<Recommendation> items, OnRecommendationListener onRecommendationListener) {
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.onRecommendationListener = onRecommendationListener;
     }
 
 
@@ -50,11 +53,11 @@ public class RecommendationsListAdapter extends BaseAdapter {
 
 
         ViewHolder holder;
-        Recommendation entity = mDataSource.get(position);
+        final Recommendation entity = mDataSource.get(position);
 
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_item, null);
+            convertView = mInflater.inflate(R.layout.recomentadion_row, null);
 
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.title);
@@ -71,6 +74,15 @@ public class RecommendationsListAdapter extends BaseAdapter {
         }
 
 
+        convertView.setOnClickListener(new View.OnClickListener(){
+
+
+            @Override
+            public void onClick(View view) {
+                onRecommendationListener.onRecommendationClick(entity);
+            }
+        });
+
         return convertView;
 
 
@@ -82,6 +94,12 @@ public class RecommendationsListAdapter extends BaseAdapter {
         TextView subTitle;
 
 
+
+
+    }
+
+    interface OnRecommendationListener{
+        void onRecommendationClick(Recommendation recommendation);
 
     }
 }

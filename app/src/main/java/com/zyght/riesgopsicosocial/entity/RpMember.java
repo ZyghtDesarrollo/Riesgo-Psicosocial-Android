@@ -5,7 +5,7 @@ package com.zyght.riesgopsicosocial.entity;
  */
 
 public class RpMember {
-    private String name, email;
+    private String name, email, phone;
 
     public String getName() {
         return name;
@@ -14,4 +14,6 @@ public class RpMember {
     public String getEmail() {
         return email;
     }
+
+    public String getPhone(){return phone;}
 }

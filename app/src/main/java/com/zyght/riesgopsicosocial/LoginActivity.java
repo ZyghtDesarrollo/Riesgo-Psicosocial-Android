@@ -183,6 +183,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (BuildConfig.DEBUG) {
 
+                mPasswordView.setText("nj64v");
+                mCodeiew.setText("1");
               //  password = "m83EH0KecIXrQjDp";
                // code = "123";
             }
